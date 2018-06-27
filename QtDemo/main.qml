@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Window 2.11
+import QtQuick.Controls 1.4
 import QtQuick.Controls 2.2
 
 Window {
@@ -28,16 +29,44 @@ Window {
             anchors.topMargin: 0
             onClicked: {
                 sqlite.loadSqliteDB()
+                sqlModel.updateModel()
             }
         }
 
         Button {
-            id:save
-            text:"Save"
+            id:close
+            text:"Close"
             anchors.topMargin: 0
             onClicked: {
-
+                sqlite.closeSqliteDB()
             }
         }
+    }
+
+    TableView {
+        id: tableView
+        y: 73
+        height: 172
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+
+        TableViewColumn {
+            role: "id"
+            title: "unit id"
+        }
+
+        TableViewColumn {
+            role: "default_name"
+            title: "unit name"
+        }
+
+        TableViewColumn {
+            role: "unity_prefab_path"
+            title: "prefab"
+        }
+
+        model: sqlModel
     }
 }

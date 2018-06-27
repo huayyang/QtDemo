@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk -mmacosx-version-min=10.11 -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk -mmacosx-version-min=10.11 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../QtDemo -I. -I../../../../Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I../../../../Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/AGL.framework/Headers -I../../../../Qt/5.11.1/clang_64/mkspecs/macx-clang -F/Users/huayuyang/Qt/5.11.1/clang_64/lib
+INCPATH       = -I../QtDemo -I. -I../../../../Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I../../../../Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers -I../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks/AGL.framework/Headers -I../../../../Qt/5.11.1/clang_64/mkspecs/macx-clang -F/Users/huayuyang/Qt/5.11.1/clang_64/lib
 QMAKE         = /Users/huayuyang/Qt/5.11.1/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = QtDemo1.0.0
 DISTDIR = /Users/huayuyang/Projects/DreamCraft/QtDemo/build-QtDemo-Desktop_Qt_5_11_1_clang_64bit-Debug/.tmp/QtDemo1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk -mmacosx-version-min=10.11 -Wl,-rpath,@executable_path/Frameworks -Wl,-rpath,/Users/huayuyang/Qt/5.11.1/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/huayuyang/Qt/5.11.1/clang_64/lib -framework QtQuick -framework QtQml -framework QtNetwork -framework QtCore -framework DiskArbitration -framework IOKit -framework QtGui -framework OpenGL -framework AGL 
+LIBS          = $(SUBLIBS) -F/Users/huayuyang/Qt/5.11.1/clang_64/lib -framework QtQuick -framework QtQml -framework QtNetwork -framework QtCore -framework DiskArbitration -framework IOKit -framework QtGui -framework QtSql -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -51,12 +51,16 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../QtDemo/main.cpp \
-		../QtDemo/SqliteDB/sqlitehelper.cpp qrc_qml.cpp \
-		moc_sqlitehelper.cpp
+		../QtDemo/SqliteDB/sqlitehelper.cpp \
+		../QtDemo/listmodel.cpp qrc_qml.cpp \
+		moc_sqlitehelper.cpp \
+		moc_listmodel.cpp
 OBJECTS       = main.o \
 		sqlitehelper.o \
+		listmodel.o \
 		qrc_qml.o \
-		moc_sqlitehelper.o
+		moc_sqlitehelper.o \
+		moc_listmodel.o
 DIST          = ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/qdevice.pri \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/device_config.prf \
@@ -244,8 +248,10 @@ DIST          = ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/exceptions.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/lex.prf \
-		../QtDemo/QtDemo.pro ../QtDemo/SqliteDB/sqlitehelper.h ../QtDemo/main.cpp \
-		../QtDemo/SqliteDB/sqlitehelper.cpp
+		../QtDemo/QtDemo.pro ../QtDemo/SqliteDB/sqlitehelper.h \
+		../QtDemo/listmodel.h ../QtDemo/main.cpp \
+		../QtDemo/SqliteDB/sqlitehelper.cpp \
+		../QtDemo/listmodel.cpp
 QMAKE_TARGET  = QtDemo
 DESTDIR       = 
 TARGET        = QtDemo.app/Contents/MacOS/QtDemo
@@ -456,6 +462,7 @@ Makefile: ../QtDemo/QtDemo.pro ../../../../Qt/5.11.1/clang_64/mkspecs/macx-clang
 		../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/QtGui.prl \
 		../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/QtQml.prl \
 		../../../../Qt/5.11.1/clang_64/lib/QtNetwork.framework/QtNetwork.prl \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/QtSql.prl \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/QtCore.prl
 	$(QMAKE) -o Makefile ../QtDemo/QtDemo.pro -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=qml_debug
 ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_pre.prf:
@@ -651,6 +658,7 @@ Makefile: ../QtDemo/QtDemo.pro ../../../../Qt/5.11.1/clang_64/mkspecs/macx-clang
 ../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/QtGui.prl:
 ../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/QtQml.prl:
 ../../../../Qt/5.11.1/clang_64/lib/QtNetwork.framework/QtNetwork.prl:
+../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/QtSql.prl:
 ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/QtCore.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../QtDemo/QtDemo.pro -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=qml_debug
@@ -683,8 +691,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../QtDemo/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.11.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtDemo/SqliteDB/sqlitehelper.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtDemo/main.cpp ../QtDemo/SqliteDB/sqlitehelper.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtDemo/SqliteDB/sqlitehelper.h ../QtDemo/listmodel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtDemo/main.cpp ../QtDemo/SqliteDB/sqlitehelper.cpp ../QtDemo/listmodel.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -722,15 +730,38 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../../Qt/5.11.1/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk -mmacosx-version-min=10.11 -Wall -W -dM -E -o moc_predefs.h ../../../../Qt/5.11.1/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_sqlitehelper.cpp
+compiler_moc_header_make_all: moc_sqlitehelper.cpp moc_listmodel.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_sqlitehelper.cpp
+	-$(DEL_FILE) moc_sqlitehelper.cpp moc_listmodel.cpp
 moc_sqlitehelper.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSql \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qtsqlglobal.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlError \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlDatabase \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QFile \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qfile.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
 		../QtDemo/SqliteDB/sqlitehelper.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.1/clang_64/bin/moc
-	/Users/huayuyang/Qt/5.11.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/huayuyang/Qt/5.11.1/clang_64/mkspecs/macx-clang -I/Users/huayuyang/Projects/DreamCraft/QtDemo/QtDemo -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/huayuyang/Qt/5.11.1/clang_64/lib ../QtDemo/SqliteDB/sqlitehelper.h -o moc_sqlitehelper.cpp
+	/Users/huayuyang/Qt/5.11.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/huayuyang/Qt/5.11.1/clang_64/mkspecs/macx-clang -I/Users/huayuyang/Projects/DreamCraft/QtDemo/QtDemo -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtSql.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/huayuyang/Qt/5.11.1/clang_64/lib ../QtDemo/SqliteDB/sqlitehelper.h -o moc_sqlitehelper.cpp
+
+moc_listmodel.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQueryModel \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		../QtDemo/listmodel.h \
+		moc_predefs.h \
+		../../../../Qt/5.11.1/clang_64/bin/moc
+	/Users/huayuyang/Qt/5.11.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/huayuyang/Qt/5.11.1/clang_64/mkspecs/macx-clang -I/Users/huayuyang/Projects/DreamCraft/QtDemo/QtDemo -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtSql.framework/Headers -I/Users/huayuyang/Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/huayuyang/Qt/5.11.1/clang_64/lib ../QtDemo/listmodel.h -o moc_listmodel.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -758,19 +789,77 @@ main.o: ../QtDemo/main.cpp ../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/He
 		../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/Headers/qqmlcontext.h \
 		../QtDemo/SqliteDB/sqlitehelper.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
-		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSql \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qtsqlglobal.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlError \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlDatabase \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QFile \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qfile.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../QtDemo/listmodel.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQueryModel \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QtDemo/main.cpp
 
 sqlitehelper.o: ../QtDemo/SqliteDB/sqlitehelper.cpp ../QtDemo/SqliteDB/sqlitehelper.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
-		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSql \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qtsqlglobal.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlError \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlDatabase \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QFile \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qfile.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDir \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdir.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sqlitehelper.o ../QtDemo/SqliteDB/sqlitehelper.cpp
+
+listmodel.o: ../QtDemo/listmodel.cpp ../QtDemo/listmodel.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQueryModel \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		../QtDemo/SqliteDB/sqlitehelper.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSql \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qtsqlglobal.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlError \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlDatabase \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QFile \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qfile.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o listmodel.o ../QtDemo/listmodel.cpp
 
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp
 
 moc_sqlitehelper.o: moc_sqlitehelper.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sqlitehelper.o moc_sqlitehelper.cpp
+
+moc_listmodel.o: moc_listmodel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_listmodel.o moc_listmodel.cpp
 
 ####### Install
 

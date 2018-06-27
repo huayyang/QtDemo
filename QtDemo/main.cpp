@@ -3,6 +3,7 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include "SqliteDB/sqlitehelper.h"
+#include "listmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,13 +11,19 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    QScopedPointer<SqliteHelper> sqliteHelper(new SqliteHelper);
+    QScopedPointer<ListModel> model(new ListModel);
+
+    sqliteHelper.data()->loadSqliteDB();
+
     QQmlApplicationEngine engine;
+
+    engine.rootContext()->setContextProperty("sqlite", sqliteHelper.data());
+    engine.rootContext()->setContextProperty("sqlModel", model.data());
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
-
-    QScopedPointer<SqliteHelper> sqliteHelper(new SqliteHelper);
-    engine.rootContext()->setContextProperty("sqlite", sqliteHelper.data());
 
     return app.exec();
 }

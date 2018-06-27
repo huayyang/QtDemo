@@ -1,4 +1,4 @@
-QT += quick
+QT += quick core gui sql
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -14,7 +14,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    SqliteDB/sqlitehelper.cpp
+    SqliteDB/sqlitehelper.cpp \
+    listmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -30,4 +31,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    SqliteDB/sqlitehelper.h
+    SqliteDB/sqlitehelper.h \
+    listmodel.h
+
+DISTFILES +=

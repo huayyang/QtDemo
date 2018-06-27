@@ -2,6 +2,13 @@
 #define SQLITEHELPER_H
 
 #include <QObject>
+#include <QSql>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QSqlDatabase>
+#include <QFile>
+#include <QDate>
+#include <QDebug>
 
 class SqliteHelper : public QObject
 {
@@ -9,7 +16,13 @@ class SqliteHelper : public QObject
 public:
     explicit SqliteHelper(QObject *parent = nullptr);
 
-    Q_INVOKABLE void loadSqliteDB();
+    Q_INVOKABLE bool loadSqliteDB();
+    Q_INVOKABLE void closeSqliteDB();
+
+
+
+private:
+    QSqlDatabase sqliteDb;
 
 signals:
 
