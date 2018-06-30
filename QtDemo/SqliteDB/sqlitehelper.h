@@ -9,6 +9,9 @@
 #include <QFile>
 #include <QDate>
 #include <QDebug>
+#include <QList>
+
+using namespace std;
 
 class SqliteHelper : public QObject
 {
@@ -19,7 +22,7 @@ public:
     Q_INVOKABLE bool loadSqliteDB();
     Q_INVOKABLE void closeSqliteDB();
 
-
+    QList<QString> loadUnitNames();
 
 private:
     QSqlDatabase sqliteDb;

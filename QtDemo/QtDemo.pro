@@ -15,7 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     SqliteDB/sqlitehelper.cpp \
-    listmodel.cpp
+    listmodel.cpp \
+    unitlistmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -32,6 +33,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     SqliteDB/sqlitehelper.h \
-    listmodel.h
+    listmodel.h \
+    unitlistmodel.h
 
 DISTFILES +=
