@@ -16,7 +16,8 @@ SOURCES += \
         main.cpp \
     SqliteDB/sqlitehelper.cpp \
     listmodel.cpp \
-    unitlistmodel.cpp
+    unitlistmodel.cpp \
+    abilitylistmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,6 +35,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     SqliteDB/sqlitehelper.h \
     listmodel.h \
-    unitlistmodel.h
+    unitlistmodel.h \
+    abilitylistmodel.h
 
 DISTFILES +=

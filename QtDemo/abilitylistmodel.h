@@ -1,14 +1,14 @@
-#ifndef UNITLISTMODEL_H
-#define UNITLISTMODEL_H
+#ifndef ABILITYLISTMODEL_H
+#define ABILITYLISTMODEL_H
 
 #include <QObject>
 #include <QSqlQueryModel>
 
-class UnitListModel : public QSqlQueryModel
+class AbilityListModel : public QSqlQueryModel
 {
     Q_OBJECT
 public:
-    explicit UnitListModel(QObject *parent = nullptr);
+    explicit AbilityListModel();
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
 protected:
@@ -18,9 +18,6 @@ signals:
 
 public slots:
     void updateModel();
-
-private:
-    const static char* SQL_SELECT;
 };
 
-#endif // UNITLISTMODEL_H
+#endif // ABILITYLISTMODEL_H

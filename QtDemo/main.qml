@@ -30,6 +30,8 @@ Window {
             onClicked: {
                 sqlite.loadSqliteDB()
                 sqlModel.updateModel()
+                unitModel.updateModel()
+                abilityModel.updateModel();
             }
         }
 
@@ -83,6 +85,7 @@ Window {
             y: 21
             width: 122
             height: 19
+            model:unitModel
         }
 
         ComboBox {
@@ -91,6 +94,7 @@ Window {
             y: 86
             width: 130
             height: 23
+            model:abilityModel
         }
 
         Button {

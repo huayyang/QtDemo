@@ -53,18 +53,22 @@ OBJECTS_DIR   = ./
 SOURCES       = ../QtDemo/main.cpp \
 		../QtDemo/SqliteDB/sqlitehelper.cpp \
 		../QtDemo/listmodel.cpp \
-		../QtDemo/unitlistmodel.cpp qrc_qml.cpp \
+		../QtDemo/unitlistmodel.cpp \
+		../QtDemo/abilitylistmodel.cpp qrc_qml.cpp \
 		moc_sqlitehelper.cpp \
 		moc_listmodel.cpp \
-		moc_unitlistmodel.cpp
+		moc_unitlistmodel.cpp \
+		moc_abilitylistmodel.cpp
 OBJECTS       = main.o \
 		sqlitehelper.o \
 		listmodel.o \
 		unitlistmodel.o \
+		abilitylistmodel.o \
 		qrc_qml.o \
 		moc_sqlitehelper.o \
 		moc_listmodel.o \
-		moc_unitlistmodel.o
+		moc_unitlistmodel.o \
+		moc_abilitylistmodel.o
 DIST          = ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/qdevice.pri \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/device_config.prf \
@@ -254,10 +258,12 @@ DIST          = ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/lex.prf \
 		../QtDemo/QtDemo.pro ../QtDemo/SqliteDB/sqlitehelper.h \
 		../QtDemo/listmodel.h \
-		../QtDemo/unitlistmodel.h ../QtDemo/main.cpp \
+		../QtDemo/unitlistmodel.h \
+		../QtDemo/abilitylistmodel.h ../QtDemo/main.cpp \
 		../QtDemo/SqliteDB/sqlitehelper.cpp \
 		../QtDemo/listmodel.cpp \
-		../QtDemo/unitlistmodel.cpp
+		../QtDemo/unitlistmodel.cpp \
+		../QtDemo/abilitylistmodel.cpp
 QMAKE_TARGET  = QtDemo
 DESTDIR       = 
 TARGET        = QtDemo.app/Contents/MacOS/QtDemo
@@ -697,8 +703,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../QtDemo/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.11.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtDemo/SqliteDB/sqlitehelper.h ../QtDemo/listmodel.h ../QtDemo/unitlistmodel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtDemo/main.cpp ../QtDemo/SqliteDB/sqlitehelper.cpp ../QtDemo/listmodel.cpp ../QtDemo/unitlistmodel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtDemo/SqliteDB/sqlitehelper.h ../QtDemo/listmodel.h ../QtDemo/unitlistmodel.h ../QtDemo/abilitylistmodel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtDemo/main.cpp ../QtDemo/SqliteDB/sqlitehelper.cpp ../QtDemo/listmodel.cpp ../QtDemo/unitlistmodel.cpp ../QtDemo/abilitylistmodel.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -736,9 +742,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../../Qt/5.11.1/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk -mmacosx-version-min=10.11 -Wall -W -dM -E -o moc_predefs.h ../../../../Qt/5.11.1/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_sqlitehelper.cpp moc_listmodel.cpp moc_unitlistmodel.cpp
+compiler_moc_header_make_all: moc_sqlitehelper.cpp moc_listmodel.cpp moc_unitlistmodel.cpp moc_abilitylistmodel.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_sqlitehelper.cpp moc_listmodel.cpp moc_unitlistmodel.cpp
+	-$(DEL_FILE) moc_sqlitehelper.cpp moc_listmodel.cpp moc_unitlistmodel.cpp moc_abilitylistmodel.cpp
 moc_sqlitehelper.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSql \
@@ -755,6 +761,8 @@ moc_sqlitehelper.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Header
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		../QtDemo/SqliteDB/sqlitehelper.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.1/clang_64/bin/moc
@@ -769,10 +777,23 @@ moc_listmodel.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/Q
 		../../../../Qt/5.11.1/clang_64/bin/moc
 	/Users/yanghuay/Qt/5.11.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/yanghuay/Qt/5.11.1/clang_64/mkspecs/macx-clang -I/Users/yanghuay/Projects/Playground/QtDemo/QtDemo -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtSql.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/yanghuay/Qt/5.11.1/clang_64/lib ../QtDemo/listmodel.h -o moc_listmodel.cpp
 
-moc_unitlistmodel.cpp: ../QtDemo/unitlistmodel.h \
+moc_unitlistmodel.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQueryModel \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		../QtDemo/unitlistmodel.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.1/clang_64/bin/moc
 	/Users/yanghuay/Qt/5.11.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/yanghuay/Qt/5.11.1/clang_64/mkspecs/macx-clang -I/Users/yanghuay/Projects/Playground/QtDemo/QtDemo -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtSql.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/yanghuay/Qt/5.11.1/clang_64/lib ../QtDemo/unitlistmodel.h -o moc_unitlistmodel.cpp
+
+moc_abilitylistmodel.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQueryModel \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		../QtDemo/abilitylistmodel.h \
+		moc_predefs.h \
+		../../../../Qt/5.11.1/clang_64/bin/moc
+	/Users/yanghuay/Qt/5.11.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/yanghuay/Qt/5.11.1/clang_64/mkspecs/macx-clang -I/Users/yanghuay/Projects/Playground/QtDemo/QtDemo -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtSql.framework/Headers -I/Users/yanghuay/Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/yanghuay/Qt/5.11.1/clang_64/lib ../QtDemo/abilitylistmodel.h -o moc_abilitylistmodel.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -815,9 +836,13 @@ main.o: ../QtDemo/main.cpp ../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/He
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		../QtDemo/listmodel.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQueryModel \
-		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		../QtDemo/unitlistmodel.h \
+		../QtDemo/abilitylistmodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QtDemo/main.cpp
 
 sqlitehelper.o: ../QtDemo/SqliteDB/sqlitehelper.cpp ../QtDemo/SqliteDB/sqlitehelper.h \
@@ -837,6 +862,8 @@ sqlitehelper.o: ../QtDemo/SqliteDB/sqlitehelper.cpp ../QtDemo/SqliteDB/sqlitehel
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDir \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdir.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sqlitehelper.o ../QtDemo/SqliteDB/sqlitehelper.cpp
@@ -860,11 +887,26 @@ listmodel.o: ../QtDemo/listmodel.cpp ../QtDemo/listmodel.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDate \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDebug \
-		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.11.1/clang_64/lib/QtGui.framework/Headers/qevent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o listmodel.o ../QtDemo/listmodel.cpp
 
-unitlistmodel.o: ../QtDemo/unitlistmodel.cpp ../QtDemo/unitlistmodel.h
+unitlistmodel.o: ../QtDemo/unitlistmodel.cpp ../QtDemo/unitlistmodel.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQueryModel \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o unitlistmodel.o ../QtDemo/unitlistmodel.cpp
+
+abilitylistmodel.o: ../QtDemo/abilitylistmodel.cpp ../QtDemo/abilitylistmodel.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/QSqlQueryModel \
+		../../../../Qt/5.11.1/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o abilitylistmodel.o ../QtDemo/abilitylistmodel.cpp
 
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp
@@ -877,6 +919,9 @@ moc_listmodel.o: moc_listmodel.cpp
 
 moc_unitlistmodel.o: moc_unitlistmodel.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_unitlistmodel.o moc_unitlistmodel.cpp
+
+moc_abilitylistmodel.o: moc_abilitylistmodel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_abilitylistmodel.o moc_abilitylistmodel.cpp
 
 ####### Install
 
