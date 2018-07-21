@@ -17,7 +17,8 @@ SOURCES += \
     SqliteDB/sqlitehelper.cpp \
     listmodel.cpp \
     unitlistmodel.cpp \
-    abilitylistmodel.cpp
+    abilitylistmodel.cpp \
+    updateunitabilityhandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,6 +37,7 @@ HEADERS += \
     SqliteDB/sqlitehelper.h \
     listmodel.h \
     unitlistmodel.h \
-    abilitylistmodel.h
+    abilitylistmodel.h \
+    updateunitabilityhandler.h
 
 DISTFILES +=

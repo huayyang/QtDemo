@@ -104,6 +104,9 @@ Window {
             width: 81
             height: 23
             text: qsTr("Save")
+            onClicked:{
+                updateUnitAbilityHandler.updateUnitAbility()
+            }
         }
 
         Text {
