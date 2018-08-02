@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-const char* UnitListModel::SQL_SELECT = "SELECT default_name FROM unit_metadata";
+const char* UnitListModel::SQL_SELECT = "SELECT name FROM unit_metadata";
 
 UnitListModel::UnitListModel(QObject *parent)
 {
@@ -26,6 +26,6 @@ QVariant UnitListModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> UnitListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[Qt::UserRole + 1] = "default_name";
+    roles[Qt::UserRole + 1] = "name";
     return roles;
 }

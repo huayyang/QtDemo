@@ -2,9 +2,14 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QSqlRecord>
 
 #define DATABASE_HOSTNAME "localhost"
+#if defined(Q_OS_IOS)
 #define DATABASE_PATH "/Users/yanghuay/Projects/Playground/QtDemo/QtDemo/DemoDB.db"
+#elif defined(Q_OS_WIN)
+#define DATABASE_PATH "D:\\Projects\\QtUnityDemo\\QtUnityDemo\\Assets\\StreamingAssets\\Metadata\\DemoDb.db"
+#endif
 
 SqliteHelper::SqliteHelper(QObject *parent) : QObject(parent)
 {
@@ -16,6 +21,7 @@ bool SqliteHelper::loadSqliteDB()
     qDebug() << "loadSqliteDB" << endl;
     if (!QFile(DATABASE_PATH).exists()) {
         qDebug() << "Failed to load DB" << endl;
+        qDebug() << DATABASE_PATH << endl;
         return false;
     }
 
@@ -40,17 +46,48 @@ void SqliteHelper::closeSqliteDB()
     sqliteDb.close();
 }
 
-QList<QString> SqliteHelper::loadUnitNames()
+QString SqliteHelper::getUnitIdWithDefaultName(QString defaultName)
 {
-    QList<QString> result;
     QSqlQuery query;
-    query.exec("SELECT default_name FROM unit_metadata");
-    while(query.next()) {
-        result.append(query.value(0).toString());
+    query.prepare("SELECT id FROM unit_metadata WHERE name = (:name)");
+    query.bindValue(":name", defaultName);
+
+    if(!query.exec()) {
+        return "";
     }
 
-    return result;
+    query.next();
+
+    return query.value(0).toString();
 }
+
+QString SqliteHelper::getAbilityIdWithAbilityName(QString abilityName)
+{
+    QSqlQuery query;
+    query.prepare("SELECT id FROM ability_metadata WHERE name = (:abilityName)");
+    query.bindValue(":abilityName", abilityName);
+
+    if(!query.exec()) {
+        return "";
+    }
+
+    query.next();
+
+    return query.value(0).toString();
+}
+
+void SqliteHelper::updateUnitAbility(QString unitId, QString abilityId)
+{
+    QSqlQuery query;
+    query.prepare("INSERT OR REPLACE INTO unit_editable(id, ability_id) values (:unitId, :abilityId)");
+    query.bindValue(":unitId", unitId);
+    query.bindValue(":abilityId", abilityId);
+
+    if(!query.exec()) {
+        qDebug() << "Failed to update unit ability" << endl;
+    }
+}
+
 
 
 

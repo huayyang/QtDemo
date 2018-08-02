@@ -21,9 +21,10 @@ int main(int argc, char *argv[])
     QScopedPointer<UnitListModel> unitModel(new UnitListModel);
     QScopedPointer<AbilityListModel> abilityModel(new AbilityListModel);
 
-    QScopedPointer<UpdateUnitAbilityHandler> updateUnitAbilityHandler(new UpdateUnitAbilityHandler(&engine));
+    QScopedPointer<UpdateUnitAbilityHandler> updateUnitAbilityHandler(new UpdateUnitAbilityHandler);
+    updateUnitAbilityHandler->initialize(sqliteHelper.data());
 
-    sqliteHelper.data()->loadSqliteDB();
+    //sqliteHelper.data()->loadSqliteDB();
 
     engine.rootContext()->setContextProperty("sqlite", sqliteHelper.data());
     engine.rootContext()->setContextProperty("sqlModel", model.data());

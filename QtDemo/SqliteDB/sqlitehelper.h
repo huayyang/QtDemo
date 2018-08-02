@@ -22,7 +22,9 @@ public:
     Q_INVOKABLE bool loadSqliteDB();
     Q_INVOKABLE void closeSqliteDB();
 
-    QList<QString> loadUnitNames();
+    QString getUnitIdWithDefaultName(QString defaultName);
+    QString getAbilityIdWithAbilityName(QString abilityName);
+    void updateUnitAbility(QString unitId, QString abilityId);
 
 private:
     QSqlDatabase sqliteDb;

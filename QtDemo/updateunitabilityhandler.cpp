@@ -2,22 +2,33 @@
 
 #include <QDebug>
 #include <QQmlContext>
-#include "unitlistmodel.h"
 
 UpdateUnitAbilityHandler::UpdateUnitAbilityHandler(QObject *parent)
 {
 
 }
 
-UpdateUnitAbilityHandler::UpdateUnitAbilityHandler(QQmlApplicationEngine *engine)
+void UpdateUnitAbilityHandler::initialize(SqliteHelper *sqliteHelper)
 {
-    engine_ = engine;
+    sqliteHelper_.reset(sqliteHelper);
 }
 
-void UpdateUnitAbilityHandler::updateUnitAbility()
+void UpdateUnitAbilityHandler::updateUnitAbility(QString unitName, QString abilityName)
 {
-    qDebug() << "UpdateUnitAbility" << endl;
-    QVariant unitModelData = engine_->rootContext()->contextProperty("unitModel");
-    UnitListModel* unitModel = unitModelData.value<UnitListModel*>();
-    qDebug() << unitModel->data(QModelIndex()) << endl;
+    qDebug() << "Update: " + unitName + ", with ability: "+ abilityName << endl;
+    if(unitName.isEmpty() || abilityName.isEmpty()) {
+        qDebug() << "updateUnitAbility failed" << endl;
+        return;
+    }
+
+    QString unitId = sqliteHelper_->getUnitIdWithDefaultName(unitName);
+    QString abilityId = sqliteHelper_->getAbilityIdWithAbilityName(abilityName);
+
+    if(unitId.isEmpty() || abilityId.isEmpty()) {
+        qDebug() << "updateUnitAbility failed" << endl;
+        return;
+    }
+
+    sqliteHelper_->updateUnitAbility(unitId, abilityId);
+
 }

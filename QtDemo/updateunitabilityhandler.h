@@ -5,20 +5,23 @@
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
 
+#include "SqliteDB/sqlitehelper.h"
+#include "unitlistmodel.h"
+
 class UpdateUnitAbilityHandler: public QObject
 {
 Q_OBJECT
 public:
    explicit  UpdateUnitAbilityHandler(QObject *parent = nullptr);
-   explicit  UpdateUnitAbilityHandler(QQmlApplicationEngine *engine);
+   void  initialize(SqliteHelper* sqliteHelper);
 
 signals:
 
 public slots:
-    void updateUnitAbility();
+    void updateUnitAbility(QString unitName, QString abilityName);
 
 private:
-    QQmlApplicationEngine* engine_;
+    QScopedPointer<SqliteHelper> sqliteHelper_;
 };
 
 #endif // UPDATEUNITABILITYHANDLER_H

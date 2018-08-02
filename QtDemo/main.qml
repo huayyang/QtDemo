@@ -84,7 +84,7 @@ Window {
             x: 0
             y: 21
             width: 122
-            height: 19
+            height: 27
             model:unitModel
         }
 
@@ -93,7 +93,7 @@ Window {
             x: 132
             y: 86
             width: 130
-            height: 23
+            height: 28
             model:abilityModel
         }
 
@@ -102,10 +102,10 @@ Window {
             x: 329
             y: 86
             width: 81
-            height: 23
+            height: 28
             text: qsTr("Save")
             onClicked:{
-                updateUnitAbilityHandler.updateUnitAbility()
+                updateUnitAbilityHandler.updateUnitAbility(comboBox.currentText, comboBox1.currentText)
             }
         }
 
