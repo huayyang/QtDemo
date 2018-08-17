@@ -1,0 +1,9 @@
+D:\Projects\EmbeddedWindow\Container\bin\Release\Container.exe
+D:\Projects\EmbeddedWindow\Container\bin\Release\Container.pdb
+D:\Projects\EmbeddedWindow\Container\obj\x86\Release\Container.csprojResolveAssemblyReference.cache
+D:\Projects\EmbeddedWindow\Container\obj\x86\Release\Container.Form1.resources
+D:\Projects\EmbeddedWindow\Container\obj\x86\Release\Container.Properties.Resources.resources
+D:\Projects\EmbeddedWindow\Container\obj\x86\Release\Container.csproj.GenerateResource.Cache
+D:\Projects\EmbeddedWindow\Container\obj\x86\Release\Container.csproj.CoreCompileInputs.cache
+D:\Projects\EmbeddedWindow\Container\obj\x86\Release\Container.exe
+D:\Projects\EmbeddedWindow\Container\obj\x86\Release\Container.pdb

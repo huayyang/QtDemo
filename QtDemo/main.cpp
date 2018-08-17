@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
 #include <QQmlContext>
+#include <QFileDialog>
+
 #include "SqliteDB/sqlitehelper.h"
 #include "listmodel.h"
 #include "unitlistmodel.h"

@@ -1,0 +1,8 @@
+D:\Projects\EmbeddedWindow\Container\bin\Debug\Container.exe
+D:\Projects\EmbeddedWindow\Container\bin\Debug\Container.pdb
+D:\Projects\EmbeddedWindow\Container\obj\x86\Debug\Container.Form1.resources
+D:\Projects\EmbeddedWindow\Container\obj\x86\Debug\Container.Properties.Resources.resources
+D:\Projects\EmbeddedWindow\Container\obj\x86\Debug\Container.csproj.GenerateResource.Cache
+D:\Projects\EmbeddedWindow\Container\obj\x86\Debug\Container.csproj.CoreCompileInputs.cache
+D:\Projects\EmbeddedWindow\Container\obj\x86\Debug\Container.exe
+D:\Projects\EmbeddedWindow\Container\obj\x86\Debug\Container.pdb
